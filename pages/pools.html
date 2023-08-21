@@ -1,3 +1,5 @@
+<!-- // pools stats by MainCoins @ http://krb.mypool.name -->
+
 <style>
     #pools_rows > tr > td{
         vertical-align: middle;
@@ -45,7 +47,7 @@
 							<i class="fa fa-unlock-alt"></i> Difficulty
 						</li>
 						
-						<li class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" data-placement="top" data-original-title="Difficulty for next block. Ratio at which at the current hashing speed blocks will be mined with 2 minutes interval.">
+						<li class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" data-placement="top" data-original-title="Difficulty for next block. Ratio at which at the current hashing speed blocks will be mined with 4 minutes interval.">
 							Current: <span id="networkDifficulty"></span>
 						</li>
 						
@@ -63,9 +65,6 @@
 					  
 						<li class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" data-placement="bottom" data-original-title="The number of miners on all known pools.">
 							Miners: <span id="total_miners"></span>
-						</li>
-						<li class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" data-placement="bottom" data-original-title="The number of miners on all known pools.">
-							Workers: <span id="total_workers"></span>
 						</li>
 						<li class="list-group-item d-flex justify-content-between align-items-center" data-toggle="tooltip" data-placement="top" data-original-title="The number of known pools.">
 							Pools: <span id="total_pools"></span>
@@ -96,7 +95,7 @@
 								</ul>
 							</div>
 							<span class="input-group-addon">=</span>
-							<span class="input-group-addon" id="calcHashResultsHolder"><span id="calcHashAmount"></span> <span id="calcHashSymbol"></span> XTCASH / day</span>
+							<span class="input-group-addon" id="calcHashResultsHolder"><span id="calcHashAmount"></span> <span id="calcHashSymbol"></span> XTE / day</span>
 						</div>
 					</div>
 				</div>
@@ -116,7 +115,6 @@
                 <th class="sorttable_numeric"><i class="fa fa-hashtag"></i>&nbsp;Hash</th>
                 <th class="sorttable_numeric"><i class="fa fa-tachometer"></i>&nbsp;Hashrate,&nbsp;H/s</th>
                 <th class="sorttable_numeric"><i class="fa fa-group"></i>&nbsp;Miners</th>
-                <th class="sorttable_numeric"><i class="fa fa-group"></i>&nbsp;Workers</th>
                 <th class="sorttable_numeric"><i class="fa fa-money"></i>&nbsp;Total Fee</th>
                 <th class="sorttable_numeric"><i class="fa fa-sign-out"></i>&nbsp;Min. Payout</th>
                 <th class="sorttable_numeric"><i class="fa fa-cube"></i>&nbsp;Last Block</th>
@@ -173,7 +171,6 @@ Difficulties = [];
 poolMiners = [];
 totalHashrate = 0;
 totalMiners = 0;
-totalWorkers = 0;
 lastReward = 0;
 avgDiff = 0;
 var bigHashrate = 300000;
@@ -186,15 +183,9 @@ var poolsRefreshed = 0;
 					} else {
 						result = host.substr(0, index);
 					}
-				if (window.location.protocol == 'https:') {	
-					var pattern = /^((https):\/\/)/;
-					if(!pattern.test(url)) {
-						url = '/api/?mode=get&url=' + url;
-					}
-				}
-	
+				
 				$.getJSON(url, (data, textStatus, jqXHR) => {
-
+					
 					
 					if (data.pool == null){
 						
@@ -206,14 +197,12 @@ var poolsRefreshed = 0;
 
 						var color= getRandomColor();
 
-						$('#pools_rows').append('<tr><td id="color-'+ result + '" style="background-color:' + color + '">&nbsp;</td><td id=host'+result+'><a target=blank href=http://'+host+'>'+result+'</a></td><td class="height" id=height-'+result+'>'+'</td><td class="lastHash" id=lastHash-'+result+'>'+'</td><td id=hashrate-'+result+'>'+data.pool_statistics.hashRate+'</td><td id=miners-'+result+'>'+data.pool_statistics.miners+'</td><td id=workers-'+result+'>'+data.pool_statistics.workers+'</td><td id=totalFee-'+result+'>'+'</td><td id=minPayout-'+result+'>'+'</td><td>'+data.pool_statistics.lastBlockFound+'</td><td><span id=lastFound-'+result+'>'+datestring+'</span> (<span class="timeago" id="ago-'+result+'">'+agostring+'</span>)</td><</tr>');
+						$('#pools_rows').append('<tr><td id="color-'+ result + '" style="background-color:' + color + '">&nbsp;</td><td id=host'+result+'><a target=blank href=http://'+host+'>'+result+'</a></td><td class="height" id=height-'+result+'>'+'</td><td class="lastHash" id=lastHash-'+result+'>'+'</td><td id=hashrate-'+result+'>'+data.pool_statistics.hashRate+'</td><td id=miners-'+result+'>'+data.pool_statistics.miners+'</td><td id=totalFee-'+result+'>'+'</td><td id=minPayout-'+result+'>'+'</td><td>'+data.pool_statistics.lastBlockFound+'</td><td><span id=lastFound-'+result+'>'+datestring+'</span> (<span class="timeago" id="ago-'+result+'">'+agostring+'</span>)</td><</tr>');
 						
 						totalHashrate += parseInt(data.pool_statistics.hashRate);
 						totalMiners += parseInt(data.pool_statistics.miners);
-						totalWorkers += parseInt(data.pool_statistics.workers);
 						updateText('totalPoolsHashrate', getReadableHashRateString(totalHashrate) + '/sec');
 						updateText('total_miners', totalMiners);
-						updateText('total_workers', totalWorkers);
 						poolNames.push(result);
 						colors["color-"+ result]=color;
 						poolHashrates.push(parseInt(data.pool_statistics.hashRate));
@@ -253,14 +242,12 @@ var poolsRefreshed = 0;
 						var lastHeight =  data.lastblock ? data.lastblock.height : data.network.height;
 						var lastHash =  data.lastblock ? data.lastblock.hash : data.network.hash;
 						
-						$('#pools_rows').append('<tr><td id="color-'+ result + '" style="background-color:' + color + '">&nbsp;</td><td id=host'+result+'><a target=blank href=http://'+host+'>'+result+'</a></td><td class="height" id=height-'+result+'>'+lastHeight+'</td><td class="lastHash" id=lastHash-'+result+'>'+lastHash+'</td><td id=hashrate-'+result+'>'+data.pool.hashrate+'</td><td id=miners-'+result+'>'+data.pool.miners+'</td><td id=workers-'+result+'>'+data.pool.workers+'</td><td id=totalFee-'+result+'>'+calculateTotalFee(data)+'%</td><td id=minPayout-'+result+'>'+getReadableCoins(data.config.minPaymentThreshold,2)+'</td><td><span id=lastFoundBlock-' + result + '>' + (!isNaN(d) ? poolBlocks.sort(cmp).reverse()[0] : 'none' ) + '</span></td><td><span id=lastFound-'+result+'>'+ (!isNaN(d) ? datestring : '-' ) +'</span> (<span class="timeago" id="ago-'+result+'">'+ (!isNaN(d) ? agostring : 'never' ) + '</span>)</td><</tr>');
+						$('#pools_rows').append('<tr><td id="color-'+ result + '" style="background-color:' + color + '">&nbsp;</td><td id=host'+result+'><a target=blank href=http://'+host+'>'+result+'</a></td><td class="height" id=height-'+result+'>'+lastHeight+'</td><td class="lastHash" id=lastHash-'+result+'>'+lastHash+'</td><td id=hashrate-'+result+'>'+data.pool.hashrate+'</td><td id=miners-'+result+'>'+data.pool.miners+'</td><td id=totalFee-'+result+'>'+calculateTotalFee(data)+'%</td><td id=minPayout-'+result+'>'+getReadableCoins(data.config.minPaymentThreshold,2)+'</td><td><span id=lastFoundBlock-' + result + '>' + (!isNaN(d) ? poolBlocks.sort(cmp).reverse()[0] : 'none' ) + '</span></td><td><span id=lastFound-'+result+'>'+ (!isNaN(d) ? datestring : '-' ) +'</span> (<span class="timeago" id="ago-'+result+'">'+ (!isNaN(d) ? agostring : 'never' ) + '</span>)</td><</tr>');
 						
 						totalHashrate += parseInt(data.pool.hashrate);
 						totalMiners += parseInt(data.pool.miners);
-						totalWorkers += parseInt(data.pool.workers);
 						updateText('totalPoolsHashrate', getReadableHashRateString(totalHashrate) + '/sec');
 						updateText('total_miners', totalMiners);
-						updateText('total_workers', totalWorkers);
 						poolNames.push(result);
 						colors["color-" + result] = color;
 						poolHashrates.push(parseInt(data.pool.hashrate));
@@ -554,7 +541,6 @@ setInterval(function(){
 	poolsRefreshed = 0;
 	var totalHashrate = 0;
 	totalMiners = 0;
-	totalWorkers = 0;
 	poolNames = [];
 	poolHashrates = [];
 	poolMiners =[];
@@ -571,14 +557,7 @@ setInterval(function(){
 				}
 				
 				it = it + 1;
-				
-				if (window.location.protocol == 'https:') {	
-					var pattern = /^((https):\/\/)/;
-					if(!pattern.test(url)) {
-						url = '/api/?mode=get&url=' + url;
-					}
-				}
-				
+					
                 $.getJSON(url, (data, textStatus, jqXHR) => {
 				
 					if (data.pool === undefined){
@@ -595,10 +574,8 @@ setInterval(function(){
 						poolMiners.push(parseInt(data.pool_statistics.miners));
 						totalHashrate += parseInt(data.pool_statistics.hashRate);
 						totalMiners += parseInt(data.pool_statistics.miners);
-						totalWorkers += parseInt(data.pool_statistics.workers);
 						updateText('totalPoolsHashrate', getReadableHashRateString(totalHashrate) + '/sec');
 						updateText('total_miners', totalMiners);
-						updateText('total_workers', totalWorkers);
 					
 						$.getJSON(url.split('/pool/stats')[0] + '/network/stats', (data, textStatus, jqXHR) => {
 						   updateText('height-'+result, data.height);
@@ -636,10 +613,8 @@ setInterval(function(){
 						
 						totalHashrate += parseInt(data.pool.hashrate);
 						totalMiners += parseInt(data.pool.miners);
-						totalWorkers += parseInt(data.pool.workers);
 						updateText('totalPoolsHashrate', getReadableHashRateString(totalHashrate) + '/sec');
 						updateText('total_miners', totalMiners);
-						updateText('total_workers', totalWorkers);
 						updateText('networkHashrate', getReadableHashRateString(lastStats.difficulty / blockTargetInterval) + '/sec');
 						updateText('networkDifficulty', getReadableDifficultyString(lastStats.difficulty, 2).toString());
 					

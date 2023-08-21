@@ -549,59 +549,76 @@ $('#goto-height').keyup(function(e){
 		updateText('avgSolveTime', getReadableTime(avg_solve_time));
 	}
 
-//  traaittCASH MemPool Transactions
-function getPoolTransactions() {
-    var xhrGetPool = $.ajax({
-        url: api + '/json_rpc',
-        method: "POST",
-        data: JSON.stringify({
-            jsonrpc:"2.0",
-            id: "test",
-            method:"f_on_transactions_pool_json",
-            params: {}
-        }),
-        dataType: 'json',
-        cache: 'false',
-        success: function(newdata) {
-            if(typeof newdata.result !== "undefined") {
-                var transactions = newdata.result.transactions;
-                var txsRows = document.getElementById('mem_pool_rows');
-                while (txsRows.firstChild) {
-                    txsRows.removeChild(txsRows.firstChild);
+//  Karbovanets MemPool Transactions
+function getPoolTransactions(){
+
+var xhrGetPool = $.ajax({
+			
+            url: api + '/json_rpc',
+            method: "POST",
+            data: JSON.stringify({
+                jsonrpc:"2.0",
+                id: "test",
+                method:"f_on_transactions_pool_json",
+                params: {
+  
                 }
-                for(var i = 0; i < transactions.length; i++) {
-                    var tx = transactions[i];
-                    var hash = tx.hash;
-                    if(hash != "") {
-                        var amount = tx.amount_out;
-                        var fee = tx.fee;
-                        var size = tx.size;
-                        var row = document.createElement('tr');
-                        var timestamp = tx.receive_time;
-                        var columns =
-                            '<td>' + formatDate(timestamp) + ' (<span class="mtx-ago"></span>)' + '</td>' +
-                            '<td>' + getReadableCoins(amount, 4, true) + '</td>' +
-                            '<td>' + getReadableCoins(fee, 4, true) + '</td>' +
-                            '<td>' + formatBytes(size) + '</td>' +
-                            '<td>' + formatPaymentLink(hash) + '</td>';
-                        row.innerHTML = columns;
-                        $(txsRows).append(row);
-                        $(row).find('.mtx-ago').timeago('update', new Date(timestamp * 1000).toISOString());
-                    }
-                }
-                updateText('mempool_count', transactions.length);
-                var totalAmount = sumField(transactions, 'amount_out');
-                var totalFee = sumField(transactions, 'fee');
-                var totalSize = sumField(transactions, 'size');
-                updateText('mempool_amount', addCommas(getReadableCoins(totalAmount, 4)));
-                updateText('mempool_fees', getReadableCoins(totalFee, 8));
-                updateText('mempool_sizes', formatBytes(totalSize));
-            }
-        },
-        error: function(data) {
-            console.log(data);
-        }
-    });
+            }),
+            dataType: 'json',
+            cache: 'false',
+            success: function(data){
+			
+				var txsRows = document.getElementById('mem_pool_rows');
+				while (txsRows.firstChild) {
+					txsRows.removeChild(txsRows.firstChild);
+				}
+				
+				var transactionList = data.result.transactions;
+				console.log(transactionList)
+				//console.log(transactionList);
+				for(var i = 0;i<transactionList.length;i++){
+					console.log("inside")
+				var row = document.createElement('tr');
+					//console.log(data);
+				var columns =
+						'<td>' + formatDate() + ' (<span class="mtx-ago"></span>)' + '</td>' +
+						'<td>' + getReadableCoins( transactionList[i].amount_out, 4, true) + '</td>' +
+						'<td>' + getReadableCoins( transactionList[i].fee, 4, true) + '</td>' +
+						'<td>' + transactionList[i].size +'</td>' +
+						'<td>' + formatPaymentLink(transactionList[i].hash) + '</td>';
+					row.innerHTML = columns;
+					$(txsRows).append(row);
+					//$(row).find('.mtx-ago').timeago('update', new Date(timestamp * 1000).toISOString());
+				}
+					
+				
+				/*var rawTxs = data.split('"transactions":"').pop();
+				rawTxs = rawTxs.split('"}}')[0];
+				var txsArray = [];
+				txsArray = rawTxs.split('\n\n');
+				txsArray.forEach(function(tx, i) {
+					var arrayOfLines = tx.split('\n');
+					var hash = arrayOfLines[0].split(': ').pop();
+					if(hash != "") {
+						var timestamp = arrayOfLines[10].split(':').pop();
+						var amount = arrayOfLines[8].split(':').pop();
+						var fee = arrayOfLines[9].split(':').pop();
+						var size = arrayOfLines[1].split(':').pop();
+						var row = document.createElement('tr');
+						var columns =
+								'<td>' + formatDate(timestamp) + ' (<span class="mtx-ago"></span>)' + '</td>' +
+								'<td>' + getReadableCoins(amount, 4, true) + '</td>' +
+								'<td>' + getReadableCoins(fee, 4, true) + '</td>' +
+								'<td>' + size + '</td>' +
+								'<td>' + formatPaymentLink(hash) + '</td>';
+						row.innerHTML = columns;
+						$(txsRows).append(row);
+						$(row).find('.mtx-ago').timeago('update', new Date(timestamp * 1000).toISOString());
+					}
+				});*/
+				updateText('mempool_count', document.querySelectorAll('#mem_pool_rows tr').length);
+			}
+		})
 };
 
 // helper function to sum a field in an array of objects
