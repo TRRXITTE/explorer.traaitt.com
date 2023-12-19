@@ -293,43 +293,43 @@ function getPools() {
 }
 
 function getNodes() {
+    nodesStat.forEach(function (node) {
+        var url = node[0];
+        $.ajax({
+            url: 'https://' + url + '/getinfo',
+            dataType: 'json',
+            type: 'GET',
+            cache: 'false'
+        }).done(function (data, success) {
+            console.log(data);
+            var index = url.indexOf(":");
+            var result;
+            if (index < 0) {
+                result = url;
+            } else {
+                result = url.substr(0, index);
+            }
 
-	nodesStat.forEach(function(node) {
-		var url = node[0];
-		$.ajax({
-			url: 'https://' + url + '/getinfo',
-			dataType: 'json',
-			type: 'GET',
-			cache: 'false'
-		}).done(function(data, success){
-			console.log(data);
-			var index = url.indexOf(":");
-			var result;
-			if (index < 0) {
-				result = url;
-			} else {
-				result = url.substr(0, index);
-			}
-			var nodeHeight = data.height - 1; // we need last block here not blockchain height
-			var nodeHash = data.top_block_hash;
-			Heights.push(nodeHeight);
-			Hashes.push(nodeHash);
-			var dateTime = new Date(data.last_block_timestamp * 1000).toISOString();
-			if(!isNaN(data.last_block_timestamp)) {
-				var datestring  = formatDate(data.last_block_timestamp);
-				var agostring = $.timeago(dateTime);
-			}
-			$('#nodes_rows').append('<tr><td id=node-'+result+'><a target=blank href="https://'+url+'/info">'+result+'</a></td><td class="height" id=nodeHeight-'+result+'>'+nodeHeight+'</td><td class="break-word hash" id=nodeHash-'+result+'>'+nodeHash+'</td><td id=known-'+result+'>'+data.last_known_block_index+'</td><td class="difficulty" id=diff-'+result+'>'+data.difficulty+'</td><td id=rpc-' + result + '>' + data.rpc_connections_count + '</td><td id=inc-'+result+'>'+ data.incoming_connections_count + '</td><td id=out-'+result+'>'+ data.outgoing_connections_count + '</td><td class="version" id=ver-'+result+'>'+ data.version + '</td><td class="date-time">' + formatDate(data.last_block_timestamp) + ' (<span class="timeago">'+agostring+'</span>)</td></tr>');
-			Versions.push(data.version);
-			nextDifficulties.push(parseInt(data.difficulty));
-			totalNodes++;
-			nodesRefreshed++;
-			updateText('total_nodes', totalNodes);
-		});
-	});
-	setTimeout(function() {
-		setCommons();
-	}, 500);
+            var nodeHeight = data.height; // Updated to use the current blockchain height
+            var nodeHash = data.last_known_block_index;
+            Heights.push(nodeHeight);
+            Hashes.push(nodeHash);
+            var dateTime = new Date(data.start_time * 1000).toISOString();
+            if (!isNaN(data.start_time)) {
+                var datestring = formatDate(data.start_time);
+                var agostring = $.timeago(dateTime);
+            }
+            $('#nodes_rows').append('<tr><td id=node-' + result + '><a target=blank href="https://' + url + '/info">' + result + '</a></td><td class="height" id=nodeHeight-' + result + '>' + nodeHeight + '</td><td class="break-word hash" id=nodeHash-' + result + '>' + nodeHash + '</td><td id=known-' + result + '>' + data.last_known_block_index + '</td><td class="difficulty" id=diff-' + result + '>' + data.difficulty + '</td><td id=rpc-' + result + '>' + data.incoming_connections_count + '</td><td id=inc-' + result + '>' + data.incoming_connections_count + '</td><td id=out-' + result + '>' + data.outgoing_connections_count + '</td><td class="version" id=ver-' + result + '>' + data.version + '</td><td class="date-time">' + formatDate(data.start_time) + ' (<span class="timeago">' + agostring + '</span>)</td></tr>');
+            Versions.push(data.version);
+            nextDifficulties.push(parseInt(data.difficulty));
+            totalNodes++;
+            nodesRefreshed++;
+            updateText('total_nodes', totalNodes);
+        });
+    });
+    setTimeout(function () {
+        setCommons();
+    }, 500);
 }
 
 // Refresh
