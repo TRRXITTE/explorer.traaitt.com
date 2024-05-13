@@ -141,7 +141,7 @@
     <table id="nodesTable" class="table table-hover sortable">
         <thead>
             <tr>
-                <th><span id="symbol"></span>&nbsp;Nodes</th>
+                <th><span id="symbol"></span>&nbsp;Nodes IP:14485</th>
                 <th class="sorttable_numeric"><i class="fa fa-list-ol"></i>&nbsp;Height</th>
                 <th class="sorttable_numeric"><i class="fa fa-hashtag"></i>&nbsp;Hash</th>
                 <th class="sorttable_numeric"><i class="fa fa-bars"></i>&nbsp;Known</th>
@@ -526,60 +526,23 @@ function highlightOutliers() {
 	var poolRows = $('#pools_rows').children();
 	for (var i = 0; i < poolRows.length; i++) {
 		var row = $(poolRows[i]);
-		row.removeClass("warning").removeClass("danger");
-		row.find('.height').removeClass("text-danger");
-		row.find('.hash').removeClass("text-danger");
+
 		
 		var poolHeight = row.find('.height').text();
 		var poolHash = row.find('.hash').text();
-		if (poolHeight != commonHeight || poolHash != commonHash) {
-			row.addClass("warning");
-		}
-		if (poolHeight != commonHeight && poolHash != commonHash) {
-			row.addClass("danger");
-		}
-		if (poolHeight != commonHeight) {
-			row.find('.height').addClass("text-danger");
-		}
-		if (poolHash != commonHash) {
-			row.find('.hash').addClass("text-danger");
-		}
+
 	}
 
 	var nodeRows = $('#nodes_rows').children();
 	for (var i = 0; i < nodeRows.length; i++) {
 		var row = $(nodeRows[i]);
-		row.removeClass("warning").removeClass("danger");
-		row.find('.version').removeClass("text-warning");
-		row.find('.difficulty').removeClass("text-danger");
+
 		row.find('.height').removeClass("text-danger");
 		row.find('.hash').removeClass("text-danger");
 		
 		var nodeHeight = row.find('.height').text();
 		var nodeHash = row.find('.hash').text();
-		if (nodeHeight != commonHeight || nodeHash != commonHash) {
-			row.addClass("warning");
-		}
-		if (nodeHeight != commonHeight && nodeHash != commonHash) {
-			row.addClass("danger");
-		}
-		var nodeVersion = row.find('.version').text();
-		if (nodeVersion != commonVersion) {
-			row.find('.version').addClass("text-warning");
-		}
-		
-		if (nodeHeight != commonHeight) {
-			row.find('.height').addClass("text-danger");
-		}
-		if (nodeHash != commonHash) {
-			row.find('.hash').addClass("text-danger");
-		}
-		
-		var nodeDiff = row.find('.difficulty').text();
-		if (nodeDiff != commonDifficulty) {
-			row.addClass("warning");
-			row.find('.difficulty').addClass("text-danger");
-		}
+
 	}
 }
 

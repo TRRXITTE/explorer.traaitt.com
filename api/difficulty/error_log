@@ -1,0 +1,16 @@
+[11-Dec-2023 21:41:28 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function curl_init() in /home/trrxfygm/explorer.traaitt.com/api/difficulty/index.php:4
+Stack trace:
+#0 {main}
+  thrown in /home/trrxfygm/explorer.traaitt.com/api/difficulty/index.php on line 4
+[11-Dec-2023 21:41:30 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function curl_init() in /home/trrxfygm/explorer.traaitt.com/api/difficulty/index.php:4
+Stack trace:
+#0 {main}
+  thrown in /home/trrxfygm/explorer.traaitt.com/api/difficulty/index.php on line 4
+[19-Dec-2023 20:02:24 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function curl_init() in /home/trrxfygm/explorer.traaitt.com/api/difficulty/index.php:4
+Stack trace:
+#0 {main}
+  thrown in /home/trrxfygm/explorer.traaitt.com/api/difficulty/index.php on line 4
+[22-Feb-2024 16:01:03 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function curl_init() in /home/trrxfygm/explorer.traaitt.com/api/difficulty/index.php:4
+Stack trace:
+#0 {main}
+  thrown in /home/trrxfygm/explorer.traaitt.com/api/difficulty/index.php on line 4

@@ -14,13 +14,13 @@
 // GNU Lesser General Public License for more details.
 //
 // You should have received a copy of the GNU Lesser General Public License
-// along with traaittCASH.  If not, see <http://www.gnu.org/licenses/>.
+// along with traaittCASH.  If not, see <https://www.gnu.org/licenses/>.
 
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
 error_reporting(0);
 
-// used as https relay for unsecure nodes
+// used as httpss relay for unsecure nodes
 if(!isset($_GET['mode'])) $mode = false;
 else $mode = true;
 
@@ -46,32 +46,32 @@ if($_GET['mode'] == "get") {
 <html>
 
 <head>
-	<link rel="stylesheet" href="http://explorer.traaitt.com/api/styles.css">
+	<link rel="stylesheet" href="https://explorer.traaitt.com/api/styles.css">
 </head>
 
 <body>
 <h1>Market Related</h1>
 <ul>
-	<li><a href="http://explorer.traaitt.com/api/totalsupply">Total Supply</a> [Integer]</li>
-	<li><a href="http://explorer.traaitt.com/api/supply">Circulating Supply</a> [Decimal]</li>
-	<li><a href="http://explorer.traaitt.com/api/lefttomine">Supply left to mine</a> [Decimal]</li>
-	<li><a href="http://explorer.traaitt.com/api/supplydeci">Total Supply</a> [Readable]</li>
+	<li><a href="https://explorer.traaitt.com/api/totalsupply">Total Supply</a> [Integer]</li>
+	<li><a href="https://explorer.traaitt.com/api/supply">Circulating Supply</a> [Decimal]</li>
+	<li><a href="https://explorer.traaitt.com/api/lefttomine">Supply left to mine</a> [Decimal]</li>
+	<li><a href="https://explorer.traaitt.com/api/supplydeci">Total Supply</a> [Readable]</li>
 
 </ul>
 <h1>Network Related</h1>
 <ul>
-	<li><a href="http://explorer.traaitt.com/api/chainsize">Blockchain size</a> [kiloByte]</li>
-	<li><a href="http://explorer.traaitt.com/api/reward">Current Block Reward</a> [Double]</li>
-	<li><a href="http://explorer.traaitt.com/api/difficulty">Current Difficulty</a> [Float]</li>
-	<li><a href="http://explorer.traaitt.com/api/hashrate">Network Hashrate</a> [Hash/s]</li>
-	<li><a href="http://explorer.traaitt.com/api/height">Network Height</a> [Integer]</li>
-	<li><a href="http://explorer.traaitt.com/api/totaltx">Transactions count</a> [Integer]</li>
+	<li><a href="https://explorer.traaitt.com/api/chainsize">Blockchain size</a> [kiloByte]</li>
+	<li><a href="https://explorer.traaitt.com/api/reward">Current Block Reward</a> [Double]</li>
+	<li><a href="https://explorer.traaitt.com/api/difficulty">Current Difficulty</a> [Float]</li>
+	<li><a href="https://explorer.traaitt.com/api/hashrate">Network Hashrate</a> [Hash/s]</li>
+	<li><a href="https://explorer.traaitt.com/api/height">Network Height</a> [Integer]</li>
+	<li><a href="https://explorer.traaitt.com/api/totaltx">Transactions count</a> [Integer]</li>
 </ul>
 
 <h1>Checkpoint Section</h1>
 <ul>
-	<li><a href="http://explorer.traaitt.com/api/checkpoint_raw">Render a traaittCASH Checkpoint</a> [CodeLine]</li>
-	<li><a href="http://explorer.traaitt.com/api/checkpoint_csv">Download a Checkpoint file</a> [CSV-File]</li>
+	<li><a href="https://explorer.traaitt.com/api/checkpoint_raw">Render a traaittCASH Checkpoint</a> [CodeLine]</li>
+	<li><a href="https://explorer.traaitt.com/api/checkpoint_csv">Download a Checkpoint file</a> [CSV-File]</li>
 </ul>
 
 </body>
