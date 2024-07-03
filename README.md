@@ -1,29 +1,38 @@
 
 
-**traaittCASH is a decentralized peer-to-peer protocol for safe payments worldwide.**
+**XTE is a decentralized peer-to-peer protocol for safe payments worldwide.**
 
-### traaittCASH Blockchain Explorer
+### XTE Blockchain Explorer
 
-Block explorer for traaittCASH CryptoNote based cryptocurrency based on the Karbowanec transaction explorer
+Block explorer for traaittXTE CryptoNote based cryptocurrency based on the Karbowanec transaction explorer
 
 #### Installation
 
-1) It takes data from daemon traaittCASHd. It should be accessible from the Internet. Run qwertycoind with open port as follows:
+1) It takes data from daemon. It should be accessible from the Internet. Run with open port as follows:
 ```bash
-./XTEnetwork --enable-cors=* --rpc-bind-ip=0.0.0.0 --rpc-bind-port=8197
+./XTEnetwork --enable-cors=* --rpc-bind-ip=0.0.0.0 
 ```
 2) Just upload to your website and change 'api' variable in config.js to point to your daemon. Also change the '$apiNode=' variable in /api/index.php to point the API urls to your daemon.
 
 ## Donate
 
 ```
-XTCASH: cashKdCEq5U7W2QDS5ffMETf1smoKLBm3C1GMYvPdEVUU9LKr1uDFrLNPkmfKgzcTcB4ASsypziCeVQ5iqkzC7fZ1pDDLSxgZF
+Ethereum: 0xD98FCe92dDE91B44f6e69fd8eD8133C8072aAc5e
 ```
 ```
-BTC: 3GVrutx2mdn7Gr63oVL83htgLBfMzXHJfT
+XTE: XT2BB8bBWQuSoSJYmWJT4N8xC4nQWGzd5NmoQRrHPRXLCdo1XsyzbZGfXJpgVg3zCNhguuMT9ktpwHSteLXHcTYK1oj1KZpcw
 ```
 ```
-ETH: 0xec2e86bc5b952dd5415270a123ec1eb89e1226ba
+XTCASH: cash9qr2ousgR7xDQRQsx4e3KbEGmGzThYK5qECukEaiHWy1MZymSKNFpWkZG2ian8BmjFFWRMi28Q7PFhwvsYvBAb21MtKvk2
+```
+```
+TRRXITTE: 0xD98FCe92dDE91B44f6e69fd8eD8133C8072aAc5e
+```
+```
+NYANTE: 0xD98FCe92dDE91B44f6e69fd8eD8133C8072aAc5e
+```
+```
+NYANDOGE: 0xD98FCe92dDE91B44f6e69fd8eD8133C8072aAc5e
 ```
 
 #### Thanks
