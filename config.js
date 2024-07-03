@@ -11,7 +11,7 @@ var refreshDelay = 1500;
 var poolsStat = 
 [
 	["xte.trrxitte.com", "https://xte.trrxitte.com/api/stats"],
-	["newpool.pw/xte", "https://minenice.newpool.pw:8267/stats"]
+	["newpool.xyz/xte", "https://minenice.newpool.xyz:8267/stats"]
 ];
 
 var nodesStat = [
